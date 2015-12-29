@@ -21,7 +21,6 @@
     },
     "autoload": {
         "classmap": [
-            "src/migrations"
         ],
         "psr-4": {
             "Odenktools\\Stoplite\\": "src/Stoplite/"
