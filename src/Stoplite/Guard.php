@@ -32,8 +32,8 @@ class Guard extends AuthGuard implements GuardContract
         $this->lastAttempted = $user = $this->userInstance()->retrieveByCredentials($credentials);
 		
 		/* --------------------------------------
-		echo $user->getEmailName() . '<br/>';
-		$user->attachRole('edan');
+			echo $user->getEmailName() . '<br/>';
+			$user->attachRole('relax');
 		*/
 		
         if (!$this->hasValidCredentials($user, $credentials))
@@ -44,15 +44,44 @@ class Guard extends AuthGuard implements GuardContract
         } else {
 
 			/* $user is userModels */
-            if (!$user->isVerified($user))
+            if (!$user->isVerified())
 			{
                 return false;
             }
 			
-            if (!$user->isActivated($user))
+            if (!$user->isActivated())
 			{
                 return false;
             }
+			
+            if ($user->hasRole())
+			{
+				$isPurchase = $user->isPurchaseable();
+
+				if ($isPurchase)
+				{
+                    if ($user->expire_date === NULL)
+					{
+                        $calc = $user->calculateDays($user->getAuthIdentifier());
+                        $user->expire_date = $calc;
+                        $user->save();
+                    }
+
+                    if ($user->isExpired($user->getAuthIdentifier()))
+					{
+						return false;
+						
+                    } else {
+
+                        return true;
+                    }
+
+				}
+				
+			} else {
+
+				throw new \RuntimeException('User not has any roles, please setup user roles.');
+			}
 			
 			return true;
         }
