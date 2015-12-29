@@ -1,0 +1,39 @@
+{
+    "name": "odenktools/stoplite",
+    "description": "",
+    "license": "MIT",
+	"type": "library",
+	"homepage": "https://github.com/odenktools/stoplite",
+	"keywords": ["stoplite", "laravel", "auth", "laravel auth", "membership", "roles", "permissions"],
+    "authors": [
+        {
+            "name": "Odenktools",
+            "email": "odenktools86@gmail.com",
+			"homepage": "http://odenktools.com",
+            "role": "Developer"	
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "5.1.*",
+		"illuminate/auth": "5.1.*",
+		"nesbot/carbon": "~1.18"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-4": {
+            "Odenktools\\Stoplite\\": "src/Stoplite/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\BeatSwitch\\Lock\\Integrations\\Laravel\\": "tests/"
+        }
+    },	
+    "config": {
+        "preferred-install": "dist"
+    },	
+    "minimum-stability": "stable"
+}
