@@ -5,6 +5,9 @@ namespace Odenktools\Stoplite;
 use Illuminate\Support\ServiceProvider;
 use Odenktools\Stoplite\Contracts\UserRepository;
 
+use Odenktools\Stoplite\Hashing\BcryptHasher;
+use Odenktools\Stoplite\Hashing\Sha256Hasher;
+
 class StopliteServiceProvider extends ServiceProvider
 {
 	/**
@@ -13,7 +16,51 @@ class StopliteServiceProvider extends ServiceProvider
 	 * @var bool
 	 */
 	protected $defer = false;
+	
+	/**
+	 * package config files
+	 * php artisan vendor:publish --provider="Ngakost\TitanWall\Providers\OdenktoolsServiceProvider" --tag="config"
+	 * @return void
+	 */
+	private function publishConfig()
+	{
+        $this->publishes([
+		__DIR__ . '/../config/stoplite.php' => config_path('stoplite.php')
+        ], 'config');
+	}
+	
+	/**
+	 * Register the hasher used by Stoplite.
+	 *
+	 * @return void
+	 */
+	protected function registerHasher()
+	{
+		$this->app['stoplite.hasher'] = $this->app->share(function($app)
+		{
+			//$hasher = $app['config']->get('stoplite.hasher');
+			
+			$hasher = \Config::get('odenktools.stoplite.hasher');
 
+			switch ($hasher)
+			{
+				case 'bcrypt':
+					return new BcryptHasher;
+					break;
+
+				case 'sha256':
+					return new Sha256Hasher;
+					break;
+					
+				default :
+					return new BcryptHasher;
+					break;
+			}
+
+			throw new \InvalidArgumentException("Invalid hasher [$hasher] chosen for Stoplite.");
+		});
+	}
+	
 	/**
 	 * Bootstrap the application events.
 	 *
@@ -21,6 +68,8 @@ class StopliteServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+		$this->publishConfig();
+		
 		$this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'stoplite');
 
 		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'stoplite');
@@ -35,8 +84,9 @@ class StopliteServiceProvider extends ServiceProvider
 		$this->app['auth']->extend('stoplite', function ($app)
         {
             $userModel 	= $app->config['auth.model'];
-            $hash 	= $app['hash'];
-
+            //$hash 	= $app['hash'];
+			$hash 		= $app['stoplite.hasher'];
+			
 			$provider = new \Odenktools\Stoplite\StopliteUserProvider($hash, $userModel);
 			
 			return new \Odenktools\Stoplite\Guard($provider, $app['session.store']);
@@ -50,6 +100,8 @@ class StopliteServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+		$this->registerHasher();
+		
         $this->app->singleton('Odenktools\Stoplite\Contracts\UserRepository', function ($app) {
             return $app['stoplite.user'];
         });		
@@ -62,7 +114,7 @@ class StopliteServiceProvider extends ServiceProvider
 	 */
 	public function provides()
 	{
-		return ['stoplite', 'stoplite.user'];
+		return ['stoplite', 'stoplite.user', 'stoplite.hasher'];
 	}
 
 	/**

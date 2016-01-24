@@ -2,10 +2,13 @@
 
 namespace Odenktools\Stoplite;
 
+
 use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
+
+use Odenktools\Stoplite\Hashing\HasherInterface;
 
 /**
  * @todo
@@ -13,6 +16,51 @@ use Illuminate\Contracts\Auth\Authenticatable as UserContract;
  */
 class StopliteUserProvider extends EloquentUserProvider implements UserProvider
 {
+	/**
+	 * The hasher for the model.
+	 *
+	 * @var \Odenktools\Stoplite\Hashing\HasherInterface
+	 */
+	protected $hasher;
+	
+    /**
+     * Create a new database user provider.
+     *
+     * @param  \Illuminate\Contracts\Hashing\Hasher  $hasher
+     * @param  string  $model
+     * @return void
+     */
+    //public function __construct(HasherContract $hasher, $model)
+	public function __construct(HasherInterface $hasher, $model)
+    {
+		$this->hasher = $hasher;
+        $this->model = $model;
+		$this->setupHasherWithModel();
+    }
+	
+    /**
+     * Gets the hasher implementation.
+     *
+     * @return \Illuminate\Contracts\Hashing\Hasher
+     */
+    public function getHasher()
+    {
+        return $this->hasher;
+    }
+
+	/**
+	 * Statically sets the hasher with the model.
+	 *
+	 * @return void
+	 */
+	public function setupHasherWithModel()
+	{
+		if (method_exists($this->model, 'setHasher'))
+		{
+			forward_static_call_array(array($this->model, 'setHasher'), array($this->hasher));
+		}
+	}
+	
     /**
      * @param array $credentials
      * @return \Illuminate\Database\Eloquent\Model|null|static

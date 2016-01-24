@@ -12,6 +12,8 @@ return [
 	
 	'super_admin'		=> 'admin',
 	
+	'hasher'			=> 'bcrypt',
+	
 	// DB prefix for tables
 	'prefix' => 'odk_',
 	
