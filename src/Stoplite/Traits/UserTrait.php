@@ -105,9 +105,11 @@ trait UserTrait
      */
     public function isExpired($user_id)
     {
-		$data = \DB::table($this->getTable())->select('expire_date')->where($this->getKeyName(), $user_id)
-											->whereRaw('TO_DAYS(`expire_date`) > TO_DAYS(NOW())')
-											->first();
+		$data = \DB::table($this->getTable())
+			->select('expire_date')->where($this->getKeyName(), $user_id)
+			->whereRaw('TO_DAYS(`expire_date`) > TO_DAYS(NOW())')
+			->first();
+
         if ($data) {
             return false;
         } else {

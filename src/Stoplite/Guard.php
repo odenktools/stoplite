@@ -11,7 +11,9 @@ use Illuminate\Contracts\Auth\Guard as GuardContract;
  */
 class Guard extends AuthGuard implements GuardContract
 {
-	
+	/**
+	 * @return \Illuminate\Contracts\Auth\UserProvider
+	 */
 	protected function userInstance()
 	{
 		return $this->provider;
