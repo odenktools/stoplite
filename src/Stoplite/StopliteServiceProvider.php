@@ -87,6 +87,13 @@ class StopliteServiceProvider extends ServiceProvider
             //$hash 	= $app['hash'];
 			$hash 		= $app['stoplite.hasher'];
 			
+			if (method_exists($userModel, 'setPasswordAttribute'))
+			{
+				echo 'setAttemptLimit';
+			}else{
+				echo 'not exist setAttemptLimit';
+			}
+			
 			$provider = new \Odenktools\Stoplite\StopliteUserProvider($hash, $userModel);
 			
 			return new \Odenktools\Stoplite\Guard($provider, $app['session.store']);
@@ -101,12 +108,26 @@ class StopliteServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->registerHasher();
-		
+		$this->registerStoplite();
         $this->app->singleton('Odenktools\Stoplite\Contracts\UserRepository', function ($app) {
             return $app['stoplite.user'];
         });		
 	}
+	
+    /**
+     * Register the application bindings.
+     *
+     * @return void
+     */
+    private function registerStoplite()
+    {
+		
+        $this->app->singleton('stoplite', function ($app) {
+            return new \Odenktools\Stoplite\Stoplite($app);
+        });
 
+    }
+	
 	/**
 	 * Get the services provided by the provider.
 	 *

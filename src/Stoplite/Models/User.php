@@ -64,7 +64,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		return $this->password;
 	}
-
+	
     /**
      * Set Hash Password after user create
      * @param $password
