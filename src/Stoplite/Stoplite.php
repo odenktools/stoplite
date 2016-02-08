@@ -36,6 +36,17 @@ class Stoplite
         return $model;
     }
 	
+	protected function microtimeToken()
+	{
+		$microtime = microtime();
+		$microtime = str_replace('.', '', $microtime);
+		$microtime = explode(' ', $microtime);
+		$microtime = $microtime[1] . $microtime[0];
+		$microtime = substr($microtime, 0, 17);
+		
+		return $microtime;
+	}
+	
     /**
 	 * <code>
 	 * echo Stoplite::generateToken();
@@ -44,14 +55,20 @@ class Stoplite
      * @param int $count
      * @return string
      */
-	public function generateToken($count=10)
+	public function generateToken($count=15)
 	{
-		$token = md5( $this->_genRandomBytes($count));
+		$token = sha1( $this->microtimeToken(). $this->_genRandomBytes($count));
+		
+		//$token = $this->microtimeToken();
+		
+		//$token = $this->_genRandomBytes($count);
 
 		return $token;
 	}
 	
     /**
+	 * Drupal Random Bytes
+	 *
      * $token = base64_encode( $this->_genRandomBytes(32));
      * echo $token;
 	 * OR
