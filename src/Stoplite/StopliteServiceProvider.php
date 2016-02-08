@@ -18,17 +18,67 @@ class StopliteServiceProvider extends ServiceProvider
 	protected $defer = false;
 	
 	/**
+	 * Publishing Configuration file to main laravel app
+	 *
 	 * package config files
-	 * php artisan vendor:publish --provider="Ngakost\TitanWall\Providers\OdenktoolsServiceProvider" --tag="config"
+	 * php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider" --tag="config"
 	 * @return void
 	 */
 	private function publishConfig()
 	{
         $this->publishes([
-		__DIR__ . '/../config/stoplite.php' => config_path('stoplite.php')
+		__DIR__ . '/../config/stoplite.php' => config_path ('stoplite.php')
         ], 'config');
 	}
 	
+	/**
+	 * Publishing views files
+	 * php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider" --tag="views"
+	 * @return void
+	 */
+	private function publishViewFolder()
+	{
+		$this->publishes([
+		__DIR__ . '/../resources/views' => base_path('resources/views/vendor/odenktools'),
+		], 'views');
+	}
+	
+    /**
+     * Publishing migration file to main laravel app
+	 * 
+	 * <code>
+	 * php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider" --tag="migrations"
+	 * php artisan migrate
+	 * </code>
+     * 
+     * @return void
+     */
+    private function publishMigrations()
+    {
+        $this->publishes([
+		    __DIR__. '/../database/migrations' => base_path ('database/migrations'),
+        ], 'migrations');
+    }
+	
+    /**
+     * Publishing seeds file to main laravel app
+	 * 
+	 * <code>
+	 * php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider" --tag="seeds"
+	 * php artisan db:seed
+	 * php artisan db:seed --class=StopliteSeeder
+	 * </code>
+	 *
+     * @return void
+     */
+	 
+	private function publishSeeder()
+	{
+        $this->publishes([
+            __DIR__.'/../database/seeds/' => base_path ('database/seeds')
+        ], 'seeds');		
+	}
+
 	/**
 	 * Register the hasher used by Stoplite.
 	 *
@@ -70,6 +120,10 @@ class StopliteServiceProvider extends ServiceProvider
 	{
 		$this->publishConfig();
 		
+		$this->publishMigrations();
+		
+		$this->publishSeeder();
+		
 		$this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'stoplite');
 
 		$this->loadViewsFrom(__DIR__ . '/../resources/views', 'stoplite');
@@ -87,12 +141,14 @@ class StopliteServiceProvider extends ServiceProvider
             //$hash 	= $app['hash'];
 			$hash 		= $app['stoplite.hasher'];
 			
+			/*
 			if (method_exists($userModel, 'setPasswordAttribute'))
 			{
 				echo 'setAttemptLimit';
 			}else{
 				echo 'not exist setAttemptLimit';
 			}
+			*/
 			
 			$provider = new \Odenktools\Stoplite\StopliteUserProvider($hash, $userModel);
 			
@@ -107,6 +163,11 @@ class StopliteServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+		
+		$this->mergeConfigFrom(
+			__DIR__.'/../config/stoplite.php', 'stoplite'
+		);
+		
 		$this->registerHasher();
 		$this->registerStoplite();
         $this->app->singleton('Odenktools\Stoplite\Contracts\UserRepository', function ($app) {
@@ -136,18 +197,6 @@ class StopliteServiceProvider extends ServiceProvider
 	public function provides()
 	{
 		return ['stoplite', 'stoplite.user', 'stoplite.hasher'];
-	}
-
-	/**
-	 * package views files
-	 * php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider" --tag="views"
-	 * @return void
-	 */
-	private function publishViewFolder()
-	{
-		$this->publishes([
-		__DIR__ . '/../resources/views' => base_path('resources/views/vendor/odenktools'),
-		], 'views');
 	}
 	
 }
