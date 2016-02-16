@@ -19,11 +19,15 @@ return [
 	
 	// Table Usage (prefix will be automatic generated on the fly)
 	'tables' => [
+
 		'user' 					=> 'users',
 		'user_fields' 			=> 'user_fields',
 		'userrole'				=> 'user_roles',
 		'role' 					=> 'role',
-		'role_profile_fields' 	=> 'role_profilefields'
+		'role_profile_fields' 	=> 'role_profilefields',
+		'permissions' 			=> 'permissions',
+		'permission_roles' 		=> 'permission_roles',
+		
 	]
 
 ];

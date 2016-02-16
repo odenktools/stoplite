@@ -100,7 +100,19 @@ class StopliteInit extends Migration
 			
 		});
 		
-		
+		Schema::create($prefix . 'permissions', function($table) use ($prefix)
+		{
+			$table->engine = 'InnoDB';
+			
+			$table->increments('id_permission');
+			$table->string('perm_name');
+			$table->string('code_perm', 50)->index();
+			$table->string('perm_description', 50)->index();
+			$table->tinyInteger('is_active')->default(0);
+			$table->timestamps();
+			
+		});
+
 		Schema::create($prefix . 'menu', function($table) use ($prefix)
 		{
 			$table->engine = 'InnoDB';
@@ -115,7 +127,7 @@ class StopliteInit extends Migration
 			$table->string('menu_route', 128)->nullable();
 			$table->string('assets_url', 128)->nullable();
 			$table->string('image', 128)->nullable();
-			$table->tinyInteger('active')->default(0);
+			$table->tinyInteger('is_active')->default(0);
 			$table->timestamps();
 			
 		});
@@ -178,7 +190,21 @@ class StopliteInit extends Migration
 			$table->foreign('userfield_id')->references('id_user_field')->on($prefix . 'user_fields');
 			
 		});
+		
+		Schema::create($prefix . 'permission_roles', function($table) use ($prefix)
+		{
+			$table->engine = 'InnoDB';
+			
+			$table->increments('id');
+			$table->integer('permission_id')->unsigned();
+			$table->integer('roles_id')->unsigned();
 
+			$table->foreign('permission_id')->references('id_permission')->on($prefix . 'permissions');
+			$table->foreign('roles_id')->references('id_role')->on($prefix . 'role');
+			$table->timestamps();
+			
+		});
+		
 	}
 	
     /**
@@ -187,15 +213,19 @@ class StopliteInit extends Migration
      */
 	public function down()
 	{
-		
+		//-- DETAIL --//
+		Schema::drop($this->prefix . 'permission_roles');
 		Schema::drop($this->prefix . 'user_profile_fields');
 		Schema::drop($this->prefix . 'user_fields');
 		Schema::drop($this->prefix . 'user_roles');
+		
+		//-- MASTER --//
 		Schema::drop($this->prefix . 'users');
 		Schema::drop($this->prefix . 'role');
 		Schema::drop($this->prefix . 'field_types');
 		Schema::drop($this->prefix . 'menu');
 		Schema::drop($this->prefix . 'user_group_fields');
+		Schema::drop($this->prefix . 'permissions');
 		
 	}
 }

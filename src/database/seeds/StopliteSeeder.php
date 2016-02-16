@@ -190,6 +190,14 @@ class StopliteSeeder extends Seeder
 			'updated_at' 	=> date('Y-m-d H:i:s')
 		]);
 		
+		$can_create_user = DB::table($prefix . $tablename['permissions'])->insert([
+			'perm_name' => 'Create User',
+			'code_perm' => 'create-user',
+			'perm_description' => 'Anyone who can create users',
+			'is_active' 	=> 1,
+		]);
+		
+		
 		DB::table($prefix . $tablename['userrole'])->insert([
 			'user_id' => $user_admin,
 			'roles_id' => $role_admin,
@@ -228,6 +236,13 @@ class StopliteSeeder extends Seeder
 		DB::table($prefix . $tablename['userrole'])->insert([
 			'user_id' => $user_gold,
 			'roles_id' => $role_gold,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
+		]);
+
+		DB::table($prefix . $tablename['permission_roles'])->insert([
+			'permission_id' => $can_create_user,
+			'roles_id' => $role_admin,
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s')
 		]);

@@ -3,8 +3,9 @@
 Laravel 5.1 Auth
 
 #How To Install
+
 To install titanwall, add the following lines in your composer.json file:
-	
+
 	"require-dev": {
 		"odenktools/stoplite": "dev-master"
 	}
@@ -14,10 +15,11 @@ Save, then run it from your console
 	composer update --dev
 
 #Setup
+
 After updating composer, add the service provider to the `providers` array in `config/app.php`
 
 	Odenktools\Stoplite\StopliteServiceProvider::class,
-	
+
 Also add the aliases to the `aliases` array in `config/app.php`
 
 	'Stoplite'      => Odenktools\Stoplite\Facades\Stoplite::class,
@@ -31,7 +33,7 @@ You can also publish the views, assets, public folder
 Or using tag
 
 	php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider" --tag="config"
-	
+
 #Migration
 
 	php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider" --tag="migrations"
@@ -44,12 +46,15 @@ Or using tag
 	php artisan db:seed --class=StopliteSeeder
 
 #Note
+
 This is Alpha release, please do not install/usage this package for your development
 
 #Documentation
+
 Onprogress
 
-#References
-[Verify](https://github.com/Toddish/Verify)
-[Entrust](https://github.com/parsidev/entrust)
-	
+#Project References
+
+-[Verify](https://github.com/Toddish/Verify)
+
+-[Entrust](https://github.com/parsidev/entrust)

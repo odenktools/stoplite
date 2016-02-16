@@ -56,12 +56,17 @@ class Guard extends AuthGuard implements GuardContract
                 return false;
             }
 			
+			//Checking User has one or more role?? if not goto h*ll!
             if ($user->hasRole())
 			{
+				// Check Role Is Purchaseable
 				$isPurchase = $user->isPurchaseable();
 
+				//Yes, role is purchaseable
 				if ($isPurchase)
 				{
+					//Trigger first time login, if not skip this
+					//Note : "expire_date" is a user field
                     if ($user->expire_date === NULL)
 					{
                         $calc = $user->calculateDays($user->getAuthIdentifier());

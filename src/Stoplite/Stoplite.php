@@ -36,6 +36,11 @@ class Stoplite
         return $model;
     }
 	
+	/**
+	 * Generate MicroTimes
+	 *
+	 * @return String
+	 */
 	protected function microtimeToken()
 	{
 		$microtime = microtime();

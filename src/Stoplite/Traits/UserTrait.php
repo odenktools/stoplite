@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * $this-> adalah class yang menggunakan Trait
+ * $this-> adalah Class yang menunjukan kelas dibawah yang menggunakan Trait ini
  */
 trait UserTrait
 {
@@ -27,6 +27,9 @@ trait UserTrait
             ->withTimestamps();
     }
 	
+	/**
+	 * Checking User has one or more role??
+	 */
     public function hasRole()
     {
         $data = $this->roles->first();
@@ -58,8 +61,10 @@ trait UserTrait
     }
 
     /**
-     * [NEW FEATURE]
-     *
+	 * @todo Refactor using Carbon
+	 *
+     * Calculate Role Expired
+	 *
      * @param $id_user
      * @return bool|string
      */
@@ -71,15 +76,19 @@ trait UserTrait
 
         if ($row) {
             switch ($row->period) {
+				//By Days
                 case "D":
                     $diff = $row->time_left;
                     break;
-                case "W":
+                //By Weeks
+				case "W":
                     $diff = $row->time_left * 7;
                     break;
+				//By Month
                 case "M":
                     $diff = $row->time_left * 30;
                     break;
+				//By Years
                 case "Y":
                     $diff = $row->time_left * 365;
                     break;
