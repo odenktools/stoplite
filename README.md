@@ -57,4 +57,4 @@ Onprogress
 
 -[Verify](https://github.com/Toddish/Verify)
 
--[Entrust](https://github.com/parsidev/entrust)
+-[Entrust](https://github.com/Zizaco/entrust)
