@@ -29,8 +29,9 @@ return [
 		'permission_roles' 		=> 'permission_roles',
 		'field_types'			=> 'field_types',
 		'user_group_fields'		=> 'user_group_fields',
-		
-		
+		'domains'				=> 'domains',
+		'domain_profilefields'	=> 'domain_profilefields',
+
 	]
 
 ];

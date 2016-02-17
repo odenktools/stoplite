@@ -10,6 +10,15 @@ class StopliteSeeder extends Seeder
 		
 		$tablename = Config::get('stoplite.tables', '');
 		
+		$domains_odenktools = DB::table($prefix . $tablename['domains'])->insertGetId([
+			'domain_name'			=> 'http://odenktools.com',
+			'code_domain_name' 		=> 'odenktools.com',
+			'is_active' 			=> 1,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s'),
+			'deleted_at' 			=> null
+		]);
+
 		$usergroup_personal = DB::table($prefix . $tablename['user_group_fields'])->insertGetId([
 			'group_name'			=> 'Personal',
 			'group_description' 	=> 'Personal group for user',
@@ -18,7 +27,7 @@ class StopliteSeeder extends Seeder
 			'created_at' 			=> date('Y-m-d H:i:s'),
 			'updated_at' 			=> date('Y-m-d H:i:s')
 		]);
-		
+
 		// -- START FIELD TYPES --//
 		$type_string = DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'String',
@@ -28,7 +37,7 @@ class StopliteSeeder extends Seeder
 			'created_at' 			=> date('Y-m-d H:i:s'),
 			'updated_at' 			=> date('Y-m-d H:i:s')
 		]);
-		
+
 		$type_text = DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'Text',
 			'code_field_types'		=> 'text',
@@ -37,7 +46,7 @@ class StopliteSeeder extends Seeder
 			'created_at' 			=> date('Y-m-d H:i:s'),
 			'updated_at' 			=> date('Y-m-d H:i:s')
 		]);
-		
+
 		DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'Number',
 			'code_field_types'		=> 'number',

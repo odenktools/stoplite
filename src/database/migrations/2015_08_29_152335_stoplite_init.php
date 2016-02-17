@@ -48,7 +48,19 @@ class StopliteInit extends Migration
 
 		});
 
+		Schema::create($prefix . 'domains', function($table)
+		{
+			$table->engine = 'InnoDB';
+			
+			$table->increments('id_domain');
+			$table->string('domain_name', 50)->index();
+			$table->string('code_domain_name', 50)->unique();
+			$table->tinyInteger('is_active')->default(0);
+			$table->timestamps();
+			$table->softDeletes();
 
+		});
+		
 		Schema::create($prefix . 'users', function($table)
 		{
 			$table->engine = 'InnoDB';
@@ -205,6 +217,34 @@ class StopliteInit extends Migration
 
 			$table->foreign('permission_id')->references('id_permission')->on($prefix . 'permissions');
 			$table->foreign('roles_id')->references('id_role')->on($prefix . 'role');
+			$table->timestamps();
+
+		});
+
+		Schema::create($prefix . 'role_profile_fields', function($table) use ($prefix)
+		{
+			$table->engine = 'InnoDB';
+
+			$table->increments('id_role_field');
+			$table->integer('role_id')->unsigned();
+			$table->integer('userfield_id')->unsigned();
+
+			$table->foreign('role_id')->references('id_role')->on($prefix . 'role');
+			$table->foreign('userfield_id')->references('id_user_fields')->on($prefix . 'user_fields');
+			$table->timestamps();
+
+		});
+
+		Schema::create($prefix . 'domain_profilefields', function($table) use ($prefix)
+		{
+			$table->engine = 'InnoDB';
+
+			$table->increments('id_domain_field');
+			$table->integer('domain_id')->unsigned();
+			$table->integer('userfield_id')->unsigned();
+
+			$table->foreign('domain_id')->references('id_domain')->on($prefix . 'domains');
+			$table->foreign('userfield_id')->references('id_user_fields')->on($prefix . 'user_fields');
 			$table->timestamps();
 
 		});
