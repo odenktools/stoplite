@@ -9,9 +9,18 @@ class StopliteSeeder extends Seeder
 		$prefix = Config::get('stoplite.prefix', '');
 		
 		$tablename = Config::get('stoplite.tables', '');
-
+		
+		$usergroup_personal = DB::table($prefix . $tablename['user_group_fields'])->insertGetId([
+			'group_name'			=> 'Personal',
+			'group_description' 	=> 'Personal group for user',
+			'group_order' 			=> 1,
+			'is_active' 			=> 1,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+		
 		// -- START FIELD TYPES --//
-		DB::table($prefix . $tablename['field_types'])->insertGetId([
+		$type_string = DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'String',
 			'field_description' 	=> 'String Value(Max length is 32 chars)',
 			'field_size' 			=> 32,
@@ -19,7 +28,7 @@ class StopliteSeeder extends Seeder
 			'updated_at' 			=> date('Y-m-d H:i:s')
 		]);
 		
-		DB::table($prefix . $tablename['field_types'])->insertGetId([
+		$type_text = DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'Text',
 			'field_description' 	=> 'Long String Value(Max length is 2048 chars)',
 			'field_size' 			=> 2048,
@@ -188,6 +197,7 @@ class StopliteSeeder extends Seeder
 		
 		// -- END ROLE --//
 		
+		//-- START USER --//
 		$user_admin = DB::table($prefix . $tablename['user'])->insertGetId([
             'username' 		=> 'admin',
             'user_mail' 	=> 'admin@example.com',
@@ -260,6 +270,10 @@ class StopliteSeeder extends Seeder
 			'updated_at' 	=> date('Y-m-d H:i:s')
 		]);
 		
+		//-- END USER --//
+		
+		//-- START PERMISSION --//
+		
 		$can_create_user = DB::table($prefix . $tablename['permissions'])->insert([
 			'perm_name' => 'Create User',
 			'code_perm' => 'create-user',
@@ -269,7 +283,9 @@ class StopliteSeeder extends Seeder
 			'updated_at' 	=> date('Y-m-d H:i:s'),			
 		]);
 		
+		//-- END PERMISSION --//
 		
+		//-- START ATTACH USER ROLE --/
 		DB::table($prefix . $tablename['userrole'])->insert([
 			'user_id' => $user_admin,
 			'roles_id' => $role_admin,
@@ -312,12 +328,55 @@ class StopliteSeeder extends Seeder
 			'updated_at' => date('Y-m-d H:i:s')
 		]);
 
+		//-- END ATTACH USER ROLE --/
+		
 		DB::table($prefix . $tablename['permission_roles'])->insert([
 			'permission_id' => $can_create_user,
 			'roles_id' => $role_admin,
 			'created_at' => date('Y-m-d H:i:s'),
 			'updated_at' => date('Y-m-d H:i:s')
 		]);
+		
+		//-- START CUSTOM FIELDS --//
+		DB::table($prefix . $tablename['user_fields'])->insert([
+			'field_type_id' => $type_string,
+			'group_field_id' => $usergroup_personal,
+			'field_name' => 'Passport number',
+			'field_comment' => null,
+			'possible_values' => null,
+			'text_select_value' => null,
+			'is_mandatory' => 1,
+			'field_order' => 1,
+			'sort_values' => 1,
+			'is_active' => 1,
+			'show_in_signup' => 1,
+			'admin_use_only' => 0,
+			'vertical_layout' => 0,
+			'is_encrypted' => 0,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
+		]);
+		
+		DB::table($prefix . $tablename['user_fields'])->insert([
+			'field_type_id' => $type_text,
+			'group_field_id' => $usergroup_personal,
+			'field_name' => 'Bio Data',
+			'field_comment' => null,
+			'possible_values' => null,
+			'text_select_value' => null,
+			'is_mandatory' => 0,
+			'field_order' => 1,
+			'sort_values' => 1,
+			'is_active' => 1,
+			'show_in_signup' => 0,
+			'admin_use_only' => 0,
+			'vertical_layout' => 0,
+			'is_encrypted' => 0,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
+		]);
+		
+		//-- END CUSTOM FIELDS --//
 		
 		$this->command->info('StopLite tables are seeded!');
 	}

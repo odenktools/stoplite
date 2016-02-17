@@ -86,6 +86,7 @@ class StopliteInit extends Migration
 			$table->tinyInteger('group_order')->default(0);
 			$table->tinyInteger('is_active')->default(0);
 			$table->tinyInteger('admin_use_only')->default(0);
+			$table->timestamps();
 
 		});
 		

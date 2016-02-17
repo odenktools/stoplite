@@ -27,6 +27,9 @@ return [
 		'role_profile_fields' 	=> 'role_profilefields',
 		'permissions' 			=> 'permissions',
 		'permission_roles' 		=> 'permission_roles',
+		'field_types'			=> 'field_types',
+		'user_group_fields'		=> 'user_group_fields',
+		
 		
 	]
 
