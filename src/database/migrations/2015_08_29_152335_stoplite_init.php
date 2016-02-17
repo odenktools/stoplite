@@ -81,7 +81,7 @@ class StopliteInit extends Migration
 
 			//$table->primary('id_group_field');
 			$table->increments('id_group_field');
-			$table->string('group_name', 50)->index();
+			$table->string('group_name', 50)->index()->unique();
 			$table->text('group_description')->nullable();
 			$table->tinyInteger('group_order')->default(0);
 			$table->tinyInteger('is_active')->default(0);
@@ -96,7 +96,8 @@ class StopliteInit extends Migration
 
 			//$table->primary('id_group_field');
 			$table->increments('id_field_type');
-			$table->string('field_name', 50)->index();
+			$table->string('field_name', 50)->index()->unique();
+			$table->string('code_field_types', 50)->index()->unique();
 			$table->text('field_description')->nullable();
 			$table->integer('field_size')->default(0);
 			$table->timestamps();
@@ -109,7 +110,7 @@ class StopliteInit extends Migration
 
 			$table->increments('id_permission');
 			$table->string('perm_name');
-			$table->string('code_perm', 50)->index();
+			$table->string('code_perm', 50)->index()->unique();
 			$table->string('perm_description', 50)->index();
 			$table->tinyInteger('is_active')->default(0);
 			$table->timestamps();
@@ -162,8 +163,8 @@ class StopliteInit extends Migration
 			$table->integer('group_field_id')->unsigned();
 			$table->string('field_name', 50)->index()->unique();
 			$table->text('field_comment', 50)->nullable();
-			$table->string('possible_values', 50);
-			$table->string('text_select_value', 50);
+			$table->string('possible_values', 50)->nullable();
+			$table->string('text_select_value', 50)->nullable();
 			$table->tinyInteger('is_mandatory')->default(0);
 			$table->tinyInteger('field_order')->default(0);
 			$table->tinyInteger('sort_values')->default(0);

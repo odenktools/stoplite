@@ -22,6 +22,7 @@ class StopliteSeeder extends Seeder
 		// -- START FIELD TYPES --//
 		$type_string = DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'String',
+			'code_field_types'		=> 'string',
 			'field_description' 	=> 'String Value(Max length is 32 chars)',
 			'field_size' 			=> 32,
 			'created_at' 			=> date('Y-m-d H:i:s'),
@@ -30,6 +31,7 @@ class StopliteSeeder extends Seeder
 		
 		$type_text = DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'Text',
+			'code_field_types'		=> 'text',
 			'field_description' 	=> 'Long String Value(Max length is 2048 chars)',
 			'field_size' 			=> 2048,
 			'created_at' 			=> date('Y-m-d H:i:s'),
@@ -38,6 +40,7 @@ class StopliteSeeder extends Seeder
 		
 		DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'Number',
+			'code_field_types'		=> 'number',
 			'field_description' 	=> 'Free style number',
 			'field_size' 			=> 10,
 			'created_at' 			=> date('Y-m-d H:i:s'),
@@ -46,6 +49,7 @@ class StopliteSeeder extends Seeder
 
 		DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'SingleSelectList',
+			'code_field_types'		=> 'singleselectlist',
 			'field_description' 	=> 'Single select from list of values',
 			'field_size' 			=> 0,
 			'created_at' 			=> date('Y-m-d H:i:s'),
@@ -54,6 +58,7 @@ class StopliteSeeder extends Seeder
 
 		DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'MultiSelectList',
+			'code_field_types'		=> 'multiselectlist',
 			'field_description' 	=> 'Multiple select from list of values',
 			'field_size' 			=> 0,
 			'created_at' 			=> date('Y-m-d H:i:s'),
@@ -62,6 +67,7 @@ class StopliteSeeder extends Seeder
 
 		DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'Checkbox',
+			'code_field_types'		=> 'checkbox',
 			'field_description' 	=> 'Checkbox',
 			'field_size' 			=> 0,
 			'created_at' 			=> date('Y-m-d H:i:s'),
@@ -70,6 +76,7 @@ class StopliteSeeder extends Seeder
 		
 		DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'RadioBoxGroup',
+			'code_field_types'		=> 'radioboxgroup',
 			'field_description' 	=> 'Radio box group',
 			'field_size' 			=> 0,
 			'created_at' 			=> date('Y-m-d H:i:s'),
@@ -78,6 +85,7 @@ class StopliteSeeder extends Seeder
 		
 		DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'ComboBox',
+			'code_field_types'		=> 'combobox',
 			'field_description' 	=> 'ComboBox',
 			'field_size' 			=> 0,
 			'created_at' 			=> date('Y-m-d H:i:s'),
@@ -354,7 +362,9 @@ class StopliteSeeder extends Seeder
 			'vertical_layout' => 0,
 			'is_encrypted' => 0,
 			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'updated_at' => date('Y-m-d H:i:s'),
+			'deleted_at' => null
+			
 		]);
 		
 		DB::table($prefix . $tablename['user_fields'])->insert([
@@ -373,7 +383,8 @@ class StopliteSeeder extends Seeder
 			'vertical_layout' => 0,
 			'is_encrypted' => 0,
 			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'updated_at' => date('Y-m-d H:i:s'),
+			'deleted_at' => null
 		]);
 		
 		//-- END CUSTOM FIELDS --//
