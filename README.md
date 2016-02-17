@@ -26,6 +26,13 @@ Also add the aliases to the `aliases` array in `config/app.php`
 
 #Publish
 
+Create Some Dummy Data
+	
+	php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider"
+	composer dumpautoload
+	php artisan migrate
+	php artisan db:seed --class=StopliteSeeder
+
 You can also publish the views, assets, public folder
 
 	php artisan vendor:publish --provider="Odenktools\Stoplite\StopliteServiceProvider"
@@ -55,6 +62,6 @@ Onprogress
 
 #Project References
 
--[Verify](https://github.com/Toddish/Verify)
+[Verify](https://github.com/Toddish/Verify)
 
--[Entrust](https://github.com/Zizaco/entrust)
+[Entrust](https://github.com/Zizaco/entrust)

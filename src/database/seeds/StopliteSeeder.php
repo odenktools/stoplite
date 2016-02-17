@@ -10,6 +10,74 @@ class StopliteSeeder extends Seeder
 		
 		$tablename = Config::get('stoplite.tables', '');
 
+		// -- START FIELD TYPES --//
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
+			'field_name'			=> 'String',
+			'field_description' 	=> 'String Value(Max length is 32 chars)',
+			'field_size' 			=> 32,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+		
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
+			'field_name'			=> 'Text',
+			'field_description' 	=> 'Long String Value(Max length is 2048 chars)',
+			'field_size' 			=> 2048,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+		
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
+			'field_name'			=> 'Number',
+			'field_description' 	=> 'Free style number',
+			'field_size' 			=> 10,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
+			'field_name'			=> 'SingleSelectList',
+			'field_description' 	=> 'Single select from list of values',
+			'field_size' 			=> 0,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
+			'field_name'			=> 'MultiSelectList',
+			'field_description' 	=> 'Multiple select from list of values',
+			'field_size' 			=> 0,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
+			'field_name'			=> 'Checkbox',
+			'field_description' 	=> 'Checkbox',
+			'field_size' 			=> 0,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+		
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
+			'field_name'			=> 'RadioBoxGroup',
+			'field_description' 	=> 'Radio box group',
+			'field_size' 			=> 0,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+		
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
+			'field_name'			=> 'ComboBox',
+			'field_description' 	=> 'ComboBox',
+			'field_size' 			=> 0,
+			'created_at' 			=> date('Y-m-d H:i:s'),
+			'updated_at' 			=> date('Y-m-d H:i:s')
+		]);
+		// -- END FIELD TYPES --//
+		
+		
+		// -- START ROLE --//
 		$role_admin = DB::table($prefix . $tablename['role'])->insertGetId([
 			'role_name' 		=> Config::get('stoplite.super_admin'),
 			'code_role'			=> 'superadmin',
@@ -118,6 +186,8 @@ class StopliteSeeder extends Seeder
 			'updated_at' 		=> date('Y-m-d H:i:s')
 		]);
 		
+		// -- END ROLE --//
+		
 		$user_admin = DB::table($prefix . $tablename['user'])->insertGetId([
             'username' 		=> 'admin',
             'user_mail' 	=> 'admin@example.com',
@@ -195,6 +265,8 @@ class StopliteSeeder extends Seeder
 			'code_perm' => 'create-user',
 			'perm_description' => 'Anyone who can create users',
 			'is_active' 	=> 1,
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),			
 		]);
 		
 		

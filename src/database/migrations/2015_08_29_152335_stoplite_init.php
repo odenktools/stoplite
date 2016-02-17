@@ -27,7 +27,7 @@ class StopliteInit extends Migration
 		Schema::create($prefix . 'role', function($table)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			//$table->primary('id_role');
 			$table->increments('id_role');
 			$table->string('role_name', 50)->index();
@@ -48,10 +48,11 @@ class StopliteInit extends Migration
 
 		});
 
+
 		Schema::create($prefix . 'users', function($table)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			//$table->primary('id_user');
 			$table->increments('id_user');
 			$table->string('username', 128)->index();
@@ -70,13 +71,14 @@ class StopliteInit extends Migration
 			$table->string('forgotten_password_code', 50)->nullable();
 			$table->dateTime('forgotten_password_time')->nullable();
 			$table->timestamps();
-			
+
 		});
 		
+		// -- Personal, Payment, Geo Information
 		Schema::create($prefix . 'user_group_fields', function($table) use ($prefix)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			//$table->primary('id_group_field');
 			$table->increments('id_group_field');
 			$table->string('group_name', 50)->index();
@@ -84,39 +86,39 @@ class StopliteInit extends Migration
 			$table->tinyInteger('group_order')->default(0);
 			$table->tinyInteger('is_active')->default(0);
 			$table->tinyInteger('admin_use_only')->default(0);
-			
+
 		});
 		
 		Schema::create($prefix . 'field_types', function($table) use ($prefix)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			//$table->primary('id_group_field');
 			$table->increments('id_field_type');
 			$table->string('field_name', 50)->index();
 			$table->text('field_description')->nullable();
 			$table->integer('field_size')->default(0);
 			$table->timestamps();
-			
+
 		});
 		
 		Schema::create($prefix . 'permissions', function($table) use ($prefix)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			$table->increments('id_permission');
 			$table->string('perm_name');
 			$table->string('code_perm', 50)->index();
 			$table->string('perm_description', 50)->index();
 			$table->tinyInteger('is_active')->default(0);
 			$table->timestamps();
-			
+
 		});
 
 		Schema::create($prefix . 'menu', function($table) use ($prefix)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			//$table->primary('id_group_field');
 			$table->increments('id_menu');
 			$table->integer('parent_menu')->default(0);
@@ -129,7 +131,7 @@ class StopliteInit extends Migration
 			$table->string('image', 128)->nullable();
 			$table->tinyInteger('is_active')->default(0);
 			$table->timestamps();
-			
+
 		});
 		
 		//========================= DETAIL ==================================
@@ -146,14 +148,14 @@ class StopliteInit extends Migration
 			$table->foreign('user_id')->references('id_user')->on($prefix . 'users');
 			$table->foreign('roles_id')->references('id_role')->on($prefix . 'role');
 			$table->timestamps();
-			
+
 		});
 
 		
 		Schema::create($prefix . 'user_fields', function($table) use ($prefix)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			$table->increments('id_user_field');
 			$table->integer('field_type_id')->unsigned();
 			$table->integer('group_field_id')->unsigned();
@@ -171,30 +173,30 @@ class StopliteInit extends Migration
 			$table->tinyInteger('is_encrypted')->default(0);
 			$table->timestamps();
 			$table->softDeletes();
-			
+
 			$table->foreign('field_type_id')->references('id_field_type')->on($prefix . 'field_types');
 			$table->foreign('group_field_id')->references('id_group_field')->on($prefix . 'user_group_fields');
-			
+
 		});
 		
 		Schema::create($prefix . 'user_profile_fields', function($table) use ($prefix)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			$table->increments('id_profile');
 			$table->integer('user_id')->unsigned();
 			$table->integer('userfield_id')->unsigned();
 			$table->text('field_value')->nullable();
-			
+
 			$table->foreign('user_id')->references('id_user')->on($prefix . 'users');
 			$table->foreign('userfield_id')->references('id_user_field')->on($prefix . 'user_fields');
-			
+
 		});
 		
 		Schema::create($prefix . 'permission_roles', function($table) use ($prefix)
 		{
 			$table->engine = 'InnoDB';
-			
+
 			$table->increments('id');
 			$table->integer('permission_id')->unsigned();
 			$table->integer('roles_id')->unsigned();
@@ -202,9 +204,9 @@ class StopliteInit extends Migration
 			$table->foreign('permission_id')->references('id_permission')->on($prefix . 'permissions');
 			$table->foreign('roles_id')->references('id_role')->on($prefix . 'role');
 			$table->timestamps();
-			
+
 		});
-		
+
 	}
 	
     /**
@@ -213,12 +215,13 @@ class StopliteInit extends Migration
      */
 	public function down()
 	{
+
 		//-- DETAIL --//
 		Schema::drop($this->prefix . 'permission_roles');
 		Schema::drop($this->prefix . 'user_profile_fields');
 		Schema::drop($this->prefix . 'user_fields');
 		Schema::drop($this->prefix . 'user_roles');
-		
+
 		//-- MASTER --//
 		Schema::drop($this->prefix . 'users');
 		Schema::drop($this->prefix . 'role');
@@ -226,6 +229,6 @@ class StopliteInit extends Migration
 		Schema::drop($this->prefix . 'menu');
 		Schema::drop($this->prefix . 'user_group_fields');
 		Schema::drop($this->prefix . 'permissions');
-		
+
 	}
 }
