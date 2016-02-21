@@ -203,7 +203,7 @@ class StopliteInit extends Migration
 			$table->text('field_value')->nullable();
 
 			$table->foreign('user_id')->references('id_user')->on($prefix . 'users');
-			$table->foreign('userfield_id')->references('id_user_fields')->on($prefix . 'user_fields');
+			$table->foreign('userfield_id')->references('id_user_field')->on($prefix . 'user_fields');
 
 		});
 		
@@ -230,7 +230,7 @@ class StopliteInit extends Migration
 			$table->integer('userfield_id')->unsigned();
 
 			$table->foreign('role_id')->references('id_role')->on($prefix . 'role');
-			$table->foreign('userfield_id')->references('id_user_fields')->on($prefix . 'user_fields');
+			$table->foreign('userfield_id')->references('id_user_field')->on($prefix . 'user_fields');
 			$table->timestamps();
 
 		});
@@ -244,7 +244,7 @@ class StopliteInit extends Migration
 			$table->integer('userfield_id')->unsigned();
 
 			$table->foreign('domain_id')->references('id_domain')->on($prefix . 'domains');
-			$table->foreign('userfield_id')->references('id_user_fields')->on($prefix . 'user_fields');
+			$table->foreign('userfield_id')->references('id_user_field')->on($prefix . 'user_fields');
 			$table->timestamps();
 
 		});
