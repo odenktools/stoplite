@@ -4,6 +4,7 @@ namespace Odenktools\Stoplite;
 
 use Illuminate\Auth\Guard as AuthGuard;
 use Illuminate\Contracts\Auth\Guard as GuardContract;
+use Odenktools\Stoplite\Messages;
 
 /**
  * @todo
@@ -11,14 +12,6 @@ use Illuminate\Contracts\Auth\Guard as GuardContract;
  */
 class Guard extends AuthGuard implements GuardContract
 {
-	/**
-	 * @return \Illuminate\Contracts\Auth\UserProvider
-	 */
-	protected function userInstance()
-	{
-		return $this->provider;
-	}
-	
     /**
      * Attempt to authenticate a user using the given credentials.
      *
@@ -31,7 +24,7 @@ class Guard extends AuthGuard implements GuardContract
     {
         $this->fireAttemptEvent($credentials, $remember, $login);
 
-        $this->lastAttempted = $user = $this->userInstance()->retrieveByCredentials($credentials);
+        $this->lastAttempted = $user = $this->provider->retrieveByCredentials($credentials);
 		
 		/* --------------------------------------
 			echo $user->getEmailName() . '<br/>';
@@ -48,12 +41,12 @@ class Guard extends AuthGuard implements GuardContract
 			/* $user is userModels */
             if (!$user->isVerified())
 			{
-                return false;
+				return false;
             }
 			
             if (!$user->isActivated())
 			{
-                return false;
+				return false;
             }
 			
 			//Checking User has one or more role?? if not goto h*ll!
@@ -77,27 +70,22 @@ class Guard extends AuthGuard implements GuardContract
                     if ($user->isExpired($user->getAuthIdentifier()))
 					{
 						return false;
-						
-                    } else {
-
-                        return true;
                     }
 
+					//return true;
 				}
 				
 			} else {
 
 				throw new \RuntimeException('User not has any roles, please setup user roles.');
 			}
-			
-			return true;
         }
 
         if ($login) {
             $this->login($user, $remember);
         }
-		
-        return false;
+
+        return Messages::SUCCESS;
     }
 	
 }
