@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Contracts\Validation\Validator;
 
 use Odenktools\Stoplite\Traits\UserTrait;
 use Odenktools\Stoplite\Contracts\UserRepository;
@@ -38,6 +39,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'verified'
     ];
 
+	public static $rules = array (
+		'username' => 'required',
+        'email' => 'required|email',
+        'password' => 'required|min:8'
+	);
+	
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -73,4 +80,39 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->attributes['password'] = \Hash::make($password);
     }
+
+    /**
+     * Create a new user
+     *
+	 * https://laravel.com/docs/5.1/validation
+     * @param  array $data
+     * @return User
+     */
+    public static function create(array $attributes = [])
+    {
+		$table = with(new static)->table;
+
+		//$v = self::validator($data);
+		$v = Validator::make($attributes, static::$rules);
+
+		$return = null;
+
+		if( $v->passes() ) 
+		{
+
+			parent::create($attributes);
+
+			$lastid = \DB::getpdo()->lastinsertid();
+
+			$return = $lastid;
+
+		}else{
+
+			//$messages = $v->errors();
+			$return = $v;
+		}
+
+		return $table;
+    }
+
 }
