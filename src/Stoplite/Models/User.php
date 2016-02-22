@@ -10,9 +10,9 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Validation\Validator;
 
 use Odenktools\Stoplite\Traits\UserTrait;
-use Odenktools\Stoplite\Contracts\UserRepository;
+use Odenktools\Stoplite\Contracts\UserRepository as OdkUserRepository;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract, UserRepository
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, OdkUserRepository
 {
     use Authenticatable, CanResetPassword, UserTrait;
 
@@ -61,7 +61,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
 	{
 		throw new \InvalidArgumentException('attachPermission belum di implementasikan.');
 	}
-	
+
+	public function findById($id)
+	{
+		throw new \InvalidArgumentException('findById belum di implementasikan.');
+	}
+
 	/**
 	 * Returns the user's password (hashed).
 	 *

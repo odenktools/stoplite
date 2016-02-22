@@ -6,6 +6,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use Odenktools\Stoplite\Contracts\UserRepository as UserProviderInterface;
+use Odenktools\Stoplite\StopliteUserProvider as UserProvider;
+
 /**
  * Stoplite Facades class
  *
@@ -18,12 +21,27 @@ class Stoplite
      * @var \Illuminate\Foundation\Application
      */
     public $app;
+	
+	/**
+	 * The user provider, used for retrieving objects
+	 *
+	 * @var \Odenktools\Stoplite\StopliteUserProvider
+	 */
+	protected $userProvider;
 
+	/*
     public function __construct($app)
     {
         $this->app = $app;
     }
+	*/
 
+    public function __construct($app, UserProviderInterface $userProvider = null)
+    {
+        $this->app = $app;
+		$this->userProvider     = $userProvider ?: new UserProvider($app['stoplite.hasher']);
+    }
+	
 	/**
      * Create a new instance of the User model.
      *

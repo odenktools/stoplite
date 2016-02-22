@@ -149,10 +149,20 @@ class StopliteServiceProvider extends ServiceProvider
 				echo 'not exist setAttemptLimit';
 			}
 			*/
+
+			$this->app['stoplite.user'] = $this->app->share(function($apps)
+			{
+				$hash 		= $apps['stoplite.hasher'];
+				$userModel 	= $apps->config['auth.model'];
+				return new \Odenktools\Stoplite\StopliteUserProvider($hash, $userModel);
+			});
+		
+			//$provider = new \Odenktools\Stoplite\StopliteUserProvider($hash, $userModel);
+			//return new \Odenktools\Stoplite\Guard($provider, $app['session.store']);
 			
+			return new \Odenktools\Stoplite\Guard($this->app['stoplite.user'], $app['session.store']);
 			$provider = new \Odenktools\Stoplite\StopliteUserProvider($hash, $userModel);
-			
-			return new \Odenktools\Stoplite\Guard($provider, $app['session.store']);
+
         });
 	}
 
@@ -170,9 +180,13 @@ class StopliteServiceProvider extends ServiceProvider
 		
 		$this->registerHasher();
 		$this->registerStoplite();
+		
+		/*
         $this->app->singleton('Odenktools\Stoplite\Contracts\UserRepository', function ($app) {
             return $app['stoplite.user'];
-        });		
+        });
+		*/
+
 	}
 	
     /**
@@ -184,7 +198,8 @@ class StopliteServiceProvider extends ServiceProvider
     {
 		
         $this->app->singleton('stoplite', function ($app) {
-            return new \Odenktools\Stoplite\Stoplite($app);
+            //return new \Odenktools\Stoplite\Stoplite($app);
+			return new \Odenktools\Stoplite\Stoplite($app, $app['stoplite.user']);
         });
 
     }

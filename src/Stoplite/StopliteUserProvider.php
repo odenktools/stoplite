@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\UserProvider;
 use Illuminate\Auth\EloquentUserProvider;
 use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 use Illuminate\Contracts\Auth\Authenticatable as UserContract;
+use Odenktools\Stoplite\Contracts\UserRepository as OdkUserRepository;
 
 use Odenktools\Stoplite\Hashing\HasherInterface;
 
@@ -14,8 +15,15 @@ use Odenktools\Stoplite\Hashing\HasherInterface;
  * @todo
  * @license MIT
  */
-class StopliteUserProvider extends EloquentUserProvider implements UserProvider
+class StopliteUserProvider extends EloquentUserProvider implements UserProvider, OdkUserRepository
 {
+	/**
+	 * The Eloquent user model.
+	 *
+	 * @var string
+	 */
+	protected $model = 'Odenktools\Stoplite\Models\User';
+	
 	/**
 	 * The hasher for the model.
 	 *
@@ -34,7 +42,12 @@ class StopliteUserProvider extends EloquentUserProvider implements UserProvider
 	public function __construct(HasherInterface $hasher, $model)
     {
 		$this->hasher = $hasher;
-        $this->model = $model;
+
+		if (isset($model))
+		{
+			$this->model = $model;
+		}
+		
 		$this->setupHasherWithModel();
     }
 	
@@ -47,6 +60,34 @@ class StopliteUserProvider extends EloquentUserProvider implements UserProvider
     {
         return $this->hasher;
     }
+
+	public function attachRole($roleName)
+	{
+		throw new \InvalidArgumentException('attachRole belum di implementasikan.');
+	}
+	
+	public function attachPermission($permissionName, array $options = [])
+	{
+		throw new \InvalidArgumentException('attachPermission belum di implementasikan.');
+	}
+	
+    /**
+     * @todo
+	 *
+     * @param int $id
+     * @return $app['auth.model']
+     */
+	public function findById($id){
+		
+		$model = $this->createModel();
+
+		if ( ! $user = $model->newQuery()->find($id))
+		{
+			throw new \InvalidArgumentException("A user could not be found with ID [$id].");
+		}
+
+		return $user;		
+	}
 
 	/**
 	 * Statically sets the hasher with the model.
