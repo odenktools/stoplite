@@ -53,6 +53,16 @@ class Stoplite
         $model = new $class;
         return $model;
     }
+
+	public function addRole($roleName)
+	{
+		return $this->getUserProvider()->addRole($roleName);
+	}
+
+	public function attachPermission($permissionName, array $options = [])
+	{
+		return $this->getUserProvider()->attachPermission($permissionName, $options);
+	}
 	
 	/**
 	 * Generate MicroTimes

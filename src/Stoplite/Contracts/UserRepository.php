@@ -4,9 +4,9 @@ namespace Odenktools\Stoplite\Contracts;
 
 interface UserRepository
 {
-    public function attachRole($roleName);
+    public function addRole($roleName);
     
-    public function attachPermission($permissionName, array $options = []);
+    public function addPermission($permissionName, array $options = []);
 	
 	/**
 	 * Finds a user by the given user ID.

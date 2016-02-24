@@ -52,19 +52,19 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'salt', 'remember_token'];
 	
-	public function attachRole($roleName)
+	public function addRole($roleName)
 	{
-		throw new \InvalidArgumentException('attachRole belum di implementasikan.');
+		throw new \InvalidArgumentException('addRole not implementing.');
 	}
 	
-	public function attachPermission($permissionName, array $options = [])
+	public function addPermission($permissionName, array $options = [])
 	{
-		throw new \InvalidArgumentException('attachPermission belum di implementasikan.');
+		throw new \InvalidArgumentException('addPermission not implementing.');
 	}
 
 	public function findById($id)
 	{
-		throw new \InvalidArgumentException('findById belum di implementasikan.');
+		throw new \InvalidArgumentException('findById not implementing.');
 	}
 
 	/**

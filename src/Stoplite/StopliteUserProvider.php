@@ -60,17 +60,29 @@ class StopliteUserProvider extends EloquentUserProvider implements UserProvider,
     {
         return $this->hasher;
     }
+	
+    /**
+     * @todo
+     *
+     * @return Object
+     */
+	public function addRole($roleName)
+	{
+		$model = $this->createModel();
+		return $model->addRole($roleName);
+	}
 
-	public function attachRole($roleName)
+    /**
+     * @todo
+     *
+     * @return Object
+     */
+	public function addPermission($permissionName, array $options = [])
 	{
-		throw new \InvalidArgumentException('attachRole belum di implementasikan.');
+		$model = $this->createModel();
+		return $model->addPermission($permissionName,$options);
 	}
-	
-	public function attachPermission($permissionName, array $options = [])
-	{
-		throw new \InvalidArgumentException('attachPermission belum di implementasikan.');
-	}
-	
+
     /**
      * @todo
 	 *
