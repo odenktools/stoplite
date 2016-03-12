@@ -92,7 +92,7 @@ class StopliteSeeder extends Seeder
 			'updated_at' 			=> date('Y-m-d H:i:s')
 		]);
 		
-		DB::table($prefix . $tablename['field_types'])->insertGetId([
+		$type_combobox = DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'ComboBox',
 			'code_field_types'		=> 'combobox',
 			'field_description' 	=> 'ComboBox',
@@ -355,48 +355,147 @@ class StopliteSeeder extends Seeder
 		]);
 		
 		//-- START CUSTOM FIELDS --//
-		DB::table($prefix . $tablename['user_fields'])->insert([
-			'field_type_id' => $type_string,
-			'group_field_id' => $usergroup_personal,
-			'field_name' => 'Passport number',
-			'field_comment' => null,
-			'possible_values' => null,
+		$user_fields_passport = DB::table($prefix . $tablename['user_fields'])->insertGetId([
+			'field_type_id' 	=> $type_string,
+			'group_field_id' 	=> $usergroup_personal,
+			'field_name' 		=> 'Passport number',
+			'field_comment' 	=> null,
+			'possible_values' 	=> null,
 			'text_select_value' => null,
-			'is_mandatory' => 1,
-			'field_order' => 1,
-			'sort_values' => 1,
-			'is_active' => 1,
-			'show_in_signup' => 1,
-			'admin_use_only' => 0,
-			'vertical_layout' => 0,
-			'is_encrypted' => 0,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s'),
-			'deleted_at' => null
-			
+			'must_unique' 		=> 1,
+			'is_mandatory' 		=> 1,
+			'field_order' 		=> 1,
+			'sort_values' 		=> 1,
+			'is_active' 		=> 1,
+			'show_in_signup' 	=> 1,
+			'admin_use_only' 	=> 0,
+			'vertical_layout' 	=> 0,
+			'is_encrypted' 		=> 0,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s'),
+			'deleted_at' 		=> null
+		]);
+
+		$user_fields_gender = DB::table($prefix . $tablename['user_fields'])->insertGetId([
+			'field_type_id' 	=> $type_combobox,
+			'group_field_id' 	=> $usergroup_personal,
+			'field_name' 		=> 'Gender',
+			'field_comment'		=> 'Please select your gender',
+			'possible_values' 	=> 'Male; Female',
+			'text_select_value' => 'Please select your gender',
+			'must_unique' 		=> 0,
+			'is_mandatory' 		=> 0,
+			'field_order' 		=> 1,
+			'sort_values' 		=> 1,
+			'is_active' 		=> 1,
+			'show_in_signup' 	=> 1,
+			'admin_use_only' 	=> 0,
+			'vertical_layout' 	=> 0,
+			'is_encrypted' 		=> 0,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s'),
+			'deleted_at' 		=> null
 		]);
 		
-		DB::table($prefix . $tablename['user_fields'])->insert([
-			'field_type_id' => $type_text,
-			'group_field_id' => $usergroup_personal,
-			'field_name' => 'Bio Data',
-			'field_comment' => null,
-			'possible_values' => null,
+		$user_fields_biodata = DB::table($prefix . $tablename['user_fields'])->insertGetId([
+			'field_type_id' 	=> $type_text,
+			'group_field_id' 	=> $usergroup_personal,
+			'field_name' 		=> 'Bio Data',
+			'field_comment'		=> null,
+			'possible_values' 	=> null,
 			'text_select_value' => null,
-			'is_mandatory' => 0,
-			'field_order' => 1,
-			'sort_values' => 1,
-			'is_active' => 1,
-			'show_in_signup' => 0,
-			'admin_use_only' => 0,
-			'vertical_layout' => 0,
-			'is_encrypted' => 0,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s'),
-			'deleted_at' => null
+			'must_unique' 		=> 0,
+			'is_mandatory' 		=> 0,
+			'field_order' 		=> 1,
+			'sort_values' 		=> 1,
+			'is_active' 		=> 1,
+			'show_in_signup' 	=> 0,
+			'admin_use_only' 	=> 0,
+			'vertical_layout' 	=> 0,
+			'is_encrypted' 		=> 0,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s'),
+			'deleted_at' 		=> null
 		]);
 		
 		//-- END CUSTOM FIELDS --//
+		
+		
+		//-- START CUSTOM FIELDS VALUE --//
+		
+		DB::table($prefix . $tablename['user_profile_fields'])->insert([
+			'user_id' 		=> $user_admin,
+			'userfield_id' 	=> $user_fields_passport,
+			'field_value' 	=> 'BD0201201',
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_at' 	=> null
+		]);
+		
+		DB::table($prefix . $tablename['user_profile_fields'])->insert([
+			'user_id' 		=> $user_admin,
+			'userfield_id' 	=> $user_fields_gender,
+			'field_value' 	=> 'male',
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_at' 	=> null
+		]);
+		
+		DB::table($prefix . $tablename['user_profile_fields'])->insert([
+			'user_id' 		=> $user_admin,
+			'userfield_id' 	=> $user_fields_biodata,
+			'field_value' 	=> 'The show must go on!',
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_at' 	=> null
+		]);
+		
+		DB::table($prefix . $tablename['user_profile_fields'])->insert([
+			'user_id' 		=> $user_member,
+			'userfield_id' 	=> $user_fields_passport,
+			'field_value' 	=> 'BD0201202',
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_at' 	=> null
+		]);
+		
+		DB::table($prefix . $tablename['user_profile_fields'])->insert([
+			'user_id' 		=> $user_free,
+			'userfield_id' 	=> $user_fields_passport,
+			'field_value' 	=> 'BD0201203',
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_at' 	=> null
+		]);
+		
+		DB::table($prefix . $tablename['user_profile_fields'])->insert([
+			'user_id' 		=> $user_bronze,
+			'userfield_id' 	=> $user_fields_passport,
+			'field_value' 	=> 'BD0201204',
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_at' 	=> null
+		]);
+		
+		DB::table($prefix . $tablename['user_profile_fields'])->insert([
+			'user_id' 		=> $user_silver,
+			'userfield_id' 	=> $user_fields_passport,
+			'field_value' 	=> 'BD0201205',
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_at' 	=> null
+		]);
+		
+		DB::table($prefix . $tablename['user_profile_fields'])->insert([
+			'user_id' 		=> $user_gold,
+			'userfield_id' 	=> $user_fields_passport,
+			'field_value' 	=> 'BD0201206',
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),
+			'deleted_at' 	=> null
+		]);
+		
+		//-- END CUSTOM FIELDS VALUE --//
 		
 		$this->command->info('StopLite tables are seeded!');
 	}

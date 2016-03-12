@@ -177,6 +177,7 @@ class StopliteInit extends Migration
 			$table->text('field_comment', 50)->nullable();
 			$table->string('possible_values', 50)->nullable();
 			$table->string('text_select_value', 50)->nullable();
+			$table->tinyInteger('must_unique')->default(0);
 			$table->tinyInteger('is_mandatory')->default(0);
 			$table->tinyInteger('field_order')->default(0);
 			$table->tinyInteger('sort_values')->default(0);
@@ -204,7 +205,8 @@ class StopliteInit extends Migration
 
 			$table->foreign('user_id')->references('id_user')->on($prefix . 'users');
 			$table->foreign('userfield_id')->references('id_user_field')->on($prefix . 'user_fields');
-
+			$table->timestamps();
+			
 		});
 		
 		Schema::create($prefix . 'permission_roles', function($table) use ($prefix)

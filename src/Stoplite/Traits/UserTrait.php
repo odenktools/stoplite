@@ -29,6 +29,7 @@ trait UserTrait
 	
 	/**
 	 * Checking User has one or more role??
+	 * @return bool
 	 */
     public function hasRole()
     {
@@ -46,7 +47,7 @@ trait UserTrait
      * $purchased = \Ngakost\TitanWall\Models\User::purchaseable()->get();
      * echo $purchased
      * </code>
-     * @param $id_user
+	 *
      * @return bool
      */
     public function isPurchaseable()
@@ -138,8 +139,13 @@ trait UserTrait
     }
 	
 	/**
+	 * @todo
+	 *
+	 * <code>
 	 * $user = new \App\Models\User;
 	 * echo $user->fromTrait();
+	 * </code>
+	 *
 	 */
 	public function fromTrait()
 	{
@@ -155,7 +161,8 @@ trait UserTrait
     }
 	
     /**
-     * @param UserContract $user
+	 * @todo
+	 *
      * @return boolean
      */
     public function isActivated()

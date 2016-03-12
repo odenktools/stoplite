@@ -31,7 +31,8 @@ return [
 		'user_group_fields'		=> 'user_group_fields',
 		'domains'				=> 'domains',
 		'domain_profilefields'	=> 'domain_profilefields',
-
+		'user_profile_fields'	=> 'user_profile_fields',
+		
 	]
 
 ];
