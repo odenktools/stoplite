@@ -8,6 +8,8 @@ use Odenktools\Stoplite\Contracts\UserRepository;
 use Odenktools\Stoplite\Hashing\BcryptHasher;
 use Odenktools\Stoplite\Hashing\Sha256Hasher;
 
+use Odenktools\Stoplite\Repositories\Eloquent\EloquentRoleRepository;
+
 class StopliteServiceProvider extends ServiceProvider
 {
 	/**
@@ -196,10 +198,17 @@ class StopliteServiceProvider extends ServiceProvider
      */
     private function registerStoplite()
     {
+        $this->app->singleton('stoplite.role', function ($app) {
+            return new EloquentRoleRepository($app, new \Odenktools\Stoplite\Models\Role());
+        });
+		
+        $this->app->singleton('Odenktools\Stoplite\Contracts\RoleRepository', function ($app) {
+            return $app['stoplite.role'];
+        });
 		
         $this->app->singleton('stoplite', function ($app) {
             //return new \Odenktools\Stoplite\Stoplite($app);
-			return new \Odenktools\Stoplite\Stoplite($app, $app['stoplite.user']);
+			return new \Odenktools\Stoplite\Stoplite($app, $app['stoplite.user'], $app['stoplite.role']);
         });
 
     }
@@ -211,7 +220,7 @@ class StopliteServiceProvider extends ServiceProvider
 	 */
 	public function provides()
 	{
-		return ['stoplite', 'stoplite.user', 'stoplite.hasher'];
+		return ['stoplite', 'stoplite.hasher', 'stoplite.user', 'stoplite.role'];
 	}
 	
 }

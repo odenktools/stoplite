@@ -5,12 +5,13 @@ namespace Odenktools\Stoplite\Models;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Odenktools\Stoplite\Traits\RoleTrait;
 use Illuminate\Database\Eloquent\Model;
+use Odenktools\Stoplite\Contracts\RoleRepository as OdkRoleRepository;
 
 /**
  * @todo
  * @license MIT
  */
-class Role extends Model
+class Role extends Model implements OdkRoleRepository
 {
 	//use SoftDeletes;
 
@@ -60,4 +61,9 @@ class Role extends Model
         parent::__construct($attributes);
     }
 
+	public function create($roleName)
+	{
+		throw new \InvalidArgumentException('create role not implementing.');
+	}
+	
 }

@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Odenktools\Stoplite\Contracts\UserRepository as UserProviderInterface;
 use Odenktools\Stoplite\StopliteUserProvider as UserProvider;
+use Odenktools\Stoplite\Contracts\RoleRepository;
 
 /**
  * Stoplite Facades class
@@ -28,18 +29,19 @@ class Stoplite
 	 * @var \Odenktools\Stoplite\StopliteUserProvider
 	 */
 	protected $userProvider;
-
-	/*
-    public function __construct($app)
-    {
-        $this->app = $app;
-    }
-	*/
-
-    public function __construct($app, UserProviderInterface $userProvider = null)
+	
+	/**
+	 * The user provider, used for retrieving objects
+	 *
+	 * @var \Odenktools\Stoplite\StopliteUserProvider
+	 */
+	protected $roleRepository;
+	
+    public function __construct($app, UserProviderInterface $userProvider = null, RoleRepository $roleRepository  = null)
     {
         $this->app = $app;
 		$this->userProvider     = $userProvider ?: new UserProvider($app['stoplite.hasher']);
+		$this->roleRepository	= $roleRepository;
     }
 	
 	/**
@@ -53,16 +55,34 @@ class Stoplite
         $model = new $class;
         return $model;
     }
-
+	
+	/**
+	 * Stoplite::addRole('superadmin');
+	 */
 	public function addRole($roleName)
 	{
-		return $this->getUserProvider()->addRole($roleName);
+		return $this->userProvider->addRole($roleName);
 	}
 
-	public function attachPermission($permissionName, array $options = [])
+	/**
+	 * Stoplite::addPermission('can edit');
+	 */
+	public function addPermission($permissionName, array $options = [])
 	{
-		return $this->getUserProvider()->attachPermission($permissionName, $options);
+		return $this->userProvider->addPermission($permissionName, $options);
 	}
+
+    /**
+     * Create a new role.
+     * Uses a repository to actually create the role.
+     *
+     * @param string $roleName
+     *
+     */
+    public function createRole($roleName)
+    {
+        return $this->roleRepository->create($roleName);
+    }
 	
 	/**
 	 * Generate MicroTimes
