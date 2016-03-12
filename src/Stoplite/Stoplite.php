@@ -81,7 +81,7 @@ class Stoplite
      */
     public function createRole($roleName)
     {
-        return $this->roleRepository->create($roleName);
+        return $this->roleRepository->createRole($roleName);
     }
 	
 	/**

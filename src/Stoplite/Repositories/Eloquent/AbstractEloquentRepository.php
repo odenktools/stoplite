@@ -4,12 +4,14 @@ namespace Odenktools\Stoplite\Repositories\Eloquent;
  
 use Illuminate\Contracts\Foundation\Application;
  
-use Odenktools\Stoplite\Repositories\BaseRepoInterface;
+use Odenktools\Stoplite\Repositories\Eloquent\BaseRepoInterface;
  
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * Class AbstractEloquentRepository
  *
- * @package Odenktools\Kampus\Repositories\Eloquent
+ * @package Odenktools\Stoplite\Repositories\Eloquent
  */
 abstract class AbstractEloquentRepository implements BaseRepoInterface
 {
@@ -31,15 +33,5 @@ abstract class AbstractEloquentRepository implements BaseRepoInterface
     {
         $this->app = $app;
         $this->model = $model;
-    }
- 
-    /**
-     * Returns all from the current model.
-     *
-     * @return static
-     */
-    public function selectAll()
-    {
-        return $this->model->selectAll();
     }
 }

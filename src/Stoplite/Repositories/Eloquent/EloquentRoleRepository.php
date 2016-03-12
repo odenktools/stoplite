@@ -35,9 +35,9 @@ class EloquentRoleRepository extends AbstractEloquentRepository implements RoleR
      *
      * @param $data
      */
-    public function create($roleName)
+    public function createRole($roleName)
     {
-        return $this->model->create($roleName);
+        return $this->model->createRole($roleName);
     }
  
 }
