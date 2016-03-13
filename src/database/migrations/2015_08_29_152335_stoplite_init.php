@@ -206,6 +206,7 @@ class StopliteInit extends Migration
 			$table->foreign('user_id')->references('id_user')->on($prefix . 'users');
 			$table->foreign('userfield_id')->references('id_user_field')->on($prefix . 'user_fields');
 			$table->timestamps();
+			$table->softDeletes();
 			
 		});
 		
