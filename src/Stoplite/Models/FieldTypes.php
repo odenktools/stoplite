@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * @todo
  * @license MIT
  */
-class Permissions extends Model
+class FieldTypes extends Model
 {
 	//use SoftDeletes;
 

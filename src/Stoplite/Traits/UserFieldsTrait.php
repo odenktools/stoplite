@@ -14,7 +14,7 @@ trait UserFieldsTrait
 	/**
 	 * Get the fieldtypes that owns the userfields.
 	 * <code>
-	 * $fieldtypes = \Odenktools\Stoplite\Models\FieldTypes::find(1);
+	 * $userfields = \Odenktools\Stoplite\Models\UserFields::find(1);
 	 * echo $userfields->fieldtypes->field_name;
 	 * </code>
 	 *
@@ -29,7 +29,7 @@ trait UserFieldsTrait
 	 * Get the groupfields that owns the userfields.
 	 *
 	 * <code>
-	 * $fieldtypes = \Odenktools\Stoplite\Models\FieldTypes::find(1);
+	 * $userfields = \Odenktools\Stoplite\Models\UserFields::find(1);
 	 * echo $userfields->groupfields->group_name;
 	 * </code>
 	 *
