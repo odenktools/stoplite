@@ -292,66 +292,98 @@ class StopliteSeeder extends Seeder
 		//-- START PERMISSION --//
 		
 		$can_create_user = DB::table($prefix . $tablename['permissions'])->insert([
-			'perm_name' => 'Create User',
-			'code_perm' => 'create-user',
-			'perm_description' => 'Anyone who can create users',
-			'is_active' 	=> 1,
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),			
+			'perm_name' 		=> 'Create User',
+			'code_perm' 		=> 'create-user',
+			'perm_description' 	=> 'Anyone who can create users',
+			'is_active' 		=> 1,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s'),			
+		]);
+		
+		$can_edit_user = DB::table($prefix . $tablename['permissions'])->insert([
+			'perm_name' 		=> 'Edit User',
+			'code_perm' 		=> 'edit-user',
+			'perm_description' 	=> 'Anyone who can edit users',
+			'is_active' 		=> 1,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s'),			
+		]);
+		
+		$can_remove_user = DB::table($prefix . $tablename['permissions'])->insert([
+			'perm_name' 		=> 'Delete User',
+			'code_perm' 		=> 'delete-user',
+			'perm_description' 	=> 'Anyone who can delete users',
+			'is_active' 		=> 1,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s'),			
 		]);
 		
 		//-- END PERMISSION --//
 		
 		//-- START ATTACH USER ROLE --/
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' => $user_admin,
-			'roles_id' => $role_admin,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'user_id' 		=> $user_admin,
+			'roles_id' 		=> $role_admin,
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' => $user_member,
-			'roles_id' => $role_member,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'user_id' 		=> $user_member,
+			'roles_id' 		=> $role_member,
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' => $user_free,
-			'roles_id' => $role_freetrial,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'user_id' 		=> $user_free,
+			'roles_id' 		=> $role_freetrial,
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' => $user_bronze,
-			'roles_id' => $role_bronze,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'user_id' 		=> $user_bronze,
+			'roles_id' 		=> $role_bronze,
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' => $user_silver,
-			'roles_id' => $role_silver,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'user_id'		=> $user_silver,
+			'roles_id'		=> $role_silver,
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' => $user_gold,
-			'roles_id' => $role_gold,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'user_id' 		=> $user_gold,
+			'roles_id' 		=> $role_gold,
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s')
 		]);
 
 		//-- END ATTACH USER ROLE --/
 		
 		DB::table($prefix . $tablename['permission_roles'])->insert([
-			'permission_id' => $can_create_user,
-			'roles_id' => $role_admin,
-			'created_at' => date('Y-m-d H:i:s'),
-			'updated_at' => date('Y-m-d H:i:s')
+			'permission_id' 	=> $can_create_user,
+			'roles_id' 			=> $role_admin,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s')
+		]);
+		
+		DB::table($prefix . $tablename['permission_roles'])->insert([
+			'permission_id' 	=> $can_edit_user,
+			'roles_id' 			=> $role_admin,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s')
+		]);
+		
+		DB::table($prefix . $tablename['permission_roles'])->insert([
+			'permission_id' 	=> $can_remove_user,
+			'roles_id' 			=> $role_admin,
+			'created_at' 		=> date('Y-m-d H:i:s'),
+			'updated_at' 		=> date('Y-m-d H:i:s')
 		]);
 		
 		//-- START CUSTOM FIELDS --//
