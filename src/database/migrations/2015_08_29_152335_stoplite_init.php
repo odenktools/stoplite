@@ -23,7 +23,18 @@ class StopliteInit extends Migration
 	public function up()
 	{
 		$prefix = $this->prefix;
-
+		
+		Schema::create($prefix . 'strip_payment', function($table)
+		{
+			$table->tinyInteger('stripe_active')->default(0);
+			$table->string('stripe_id')->nullable();
+			$table->string('stripe_subscription')->nullable();
+			$table->string('stripe_plan', 100)->nullable();
+			$table->string('last_four', 4)->nullable();
+			$table->timestamp('trial_ends_at')->nullable();
+			$table->timestamp('subscription_ends_at')->nullable();
+		});
+		
 		Schema::create($prefix . 'role', function($table)
 		{
 			$table->engine = 'InnoDB';

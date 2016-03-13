@@ -56,6 +56,13 @@ Or using tag
 
 This is Alpha release, please do not install/usage this package for your development
 
+User Entity Relashionships
+
+	- odk_users 				: main user table
+	- odk_user_fields			: user custom field [foreign : field_type_id(odk_field_types), group_field_id(odk_user_group_fields)]
+	- odk_user_profile_fields 	: values for table user_fields [foreign : userid(odk_users), userfield_id(odk_user_fields)]
+	- odk_user_group_fields		: user custom field type for table user_fields
+
 #Documentation
 
 Onprogress
