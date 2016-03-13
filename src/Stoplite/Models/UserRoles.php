@@ -2,39 +2,33 @@
 
 namespace Odenktools\Stoplite\Models;
 
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Odenktools\Stoplite\Traits\UserGroupFieldsTrait;
+use Odenktools\Stoplite\Traits\UserRolesTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @todo
+ * Value For UserFields
+ *
  * @license MIT
  */
-class UserGroupFields extends Model
+class UserRoles extends Model
 {
-    use UserGroupFieldsTrait;
+    use UserRolesTrait;
 	
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table = 'odk_user_group_fields';
+    protected $table 		= 'odk_user_roles';
 
-	protected $primaryKey = 'id_group_field';
+	protected $primaryKey 	= 'id_user_roles';
 	
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-		'group_name',
-		'group_description',
-		'group_order',
-		'is_active',
-		'admin_use_only'
-	];
+    protected $fillable = [];
 
     /**
      * @param array $attributes
