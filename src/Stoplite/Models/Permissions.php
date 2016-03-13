@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @todo
+ *
  * @license MIT
  */
 class Permissions extends Model
@@ -21,8 +22,13 @@ class Permissions extends Model
      *
      * @var string
      */
-    protected $table = 'odk_permissions';
+    protected $table;
 
+	/**
+	 * Primary Key
+	 *
+	 * @var string
+	 */
 	protected $primaryKey = 'id_permission';
 	
     /**
@@ -43,6 +49,9 @@ class Permissions extends Model
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
+        $prefix = \Config::get('stoplite.prefix');
+        $stable = \Config::get('stoplite.tables');
+		$this->table = $prefix.$stable['permissions'];
     }
 
 }

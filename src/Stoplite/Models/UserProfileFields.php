@@ -22,7 +22,7 @@ class UserProfileFields extends Model
      *
      * @var string
      */
-    protected $table 		= 'odk_user_profile_fields';
+    protected $table;
 
 	protected $primaryKey 	= 'id_profile';
 	
@@ -41,6 +41,9 @@ class UserProfileFields extends Model
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
+        $prefix = \Config::get('stoplite.prefix');
+        $stable = \Config::get('stoplite.tables');
+		$this->table = $prefix.$stable['user_profile_fields'];
     }
 
 }

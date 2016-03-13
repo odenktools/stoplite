@@ -19,7 +19,7 @@ class UserGroupFields extends Model
      *
      * @var string
      */
-    protected $table = 'odk_user_group_fields';
+    protected $table;
 
 	protected $primaryKey = 'id_group_field';
 	
@@ -42,6 +42,9 @@ class UserGroupFields extends Model
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
+        $prefix = \Config::get('stoplite.prefix');
+        $stable = \Config::get('stoplite.tables');
+		$this->table = $prefix.$stable['user_group_fields'];
     }
 
 }

@@ -19,7 +19,7 @@ class UserRoles extends Model
      *
      * @var string
      */
-    protected $table 		= 'odk_user_roles';
+    protected $table;
 
 	protected $primaryKey 	= 'id_user_roles';
 	
@@ -36,6 +36,9 @@ class UserRoles extends Model
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
+        $prefix = \Config::get('stoplite.prefix');
+        $stable = \Config::get('stoplite.tables');
+		$this->table = $prefix.$stable['userrole'];
     }
 
 }

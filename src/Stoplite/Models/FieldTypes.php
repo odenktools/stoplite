@@ -21,7 +21,7 @@ class FieldTypes extends Model
      *
      * @var string
      */
-    protected $table = 'odk_field_types';
+    protected $table;
 
 	protected $primaryKey = 'id_field_type';
 	
@@ -42,6 +42,9 @@ class FieldTypes extends Model
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
+        $prefix = \Config::get('stoplite.prefix');
+        $stable = \Config::get('stoplite.tables');
+		$this->table = $prefix.$stable['field_types'];
     }
 
 }
