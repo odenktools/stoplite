@@ -84,6 +84,11 @@ class Stoplite
         return $this->roleRepository->createRole($roleName);
     }
 	
+    public function getRole()
+    {
+        return $this->app['stoplite.role']->role();
+    }
+	
 	/**
 	 * Generate MicroTimes
 	 *

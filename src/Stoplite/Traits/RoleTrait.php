@@ -11,5 +11,13 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 trait RoleTrait
 {
+	public function getRoleName()
+	{
+		return $this->role_name;
+	}
 	
+	public function createRole($roleName)
+	{
+		throw new \InvalidArgumentException('create role not implementing.');
+	}
 }

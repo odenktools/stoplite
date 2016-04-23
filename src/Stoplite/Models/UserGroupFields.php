@@ -3,7 +3,7 @@
 namespace Odenktools\Stoplite\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Odenktools\Stoplite\Traits\UserGroupFieldsTrait;
+use Odenktools\Stoplite\Traits\FieldTypesTrait;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class UserGroupFields extends Model
 {
+	//use SoftDeletes;
+
     use UserGroupFieldsTrait;
 	
     /**
@@ -19,7 +21,7 @@ class UserGroupFields extends Model
      *
      * @var string
      */
-    protected $table;
+    protected $table = 'odk_user_group_fields';
 
 	protected $primaryKey = 'id_group_field';
 	
@@ -42,9 +44,6 @@ class UserGroupFields extends Model
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
-        $prefix = \Config::get('stoplite.prefix');
-        $stable = \Config::get('stoplite.tables');
-		$this->table = $prefix.$stable['user_group_fields'];
     }
 
 }

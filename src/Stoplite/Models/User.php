@@ -10,9 +10,9 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Contracts\Validation\Validator;
 
 use Odenktools\Stoplite\Traits\UserTrait;
-use Odenktools\Stoplite\Contracts\UserRepository;
+use Odenktools\Stoplite\Contracts\UserRepository as OdkUserRepository;
 
-class User extends Model implements AuthenticatableContract, CanResetPasswordContract, UserRepository
+class User extends Model implements AuthenticatableContract, CanResetPasswordContract, OdkUserRepository
 {
     use Authenticatable, CanResetPassword, UserTrait;
 
@@ -52,31 +52,16 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'salt', 'remember_token'];
 	
-    /**
-     * @todo
-     *
-     * @var array
-     */
 	public function addRole($roleName)
 	{
 		throw new \InvalidArgumentException('addRole not implementing.');
 	}
 	
-    /**
-     * @todo
-     *
-     * @var array
-     */
 	public function addPermission($permissionName, array $options = [])
 	{
 		throw new \InvalidArgumentException('addPermission not implementing.');
 	}
-	
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
+
 	public function findById($id)
 	{
 		throw new \InvalidArgumentException('findById not implementing.');
@@ -100,77 +85,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     {
         $this->attributes['password'] = \Hash::make($password);
     }
-	
-    /**
-     * Get the unique identifier for the user.
-     *
-     * @return string
-     */
-    public function getId()
-	{
-        throw new \InvalidArgumentException('not implementing.');
-    }
-	
-    /**
-     * @todo
-     *
-     * @return string
-     */
-    public function getUsername()
-	{
-        throw new \InvalidArgumentException('not implementing.');
-    }
-	
-    /**
-     * Get the unique identifier for the user.
-     *
-     * @return string
-     */
-    public function getEmail()
-	{
-        throw new \InvalidArgumentException('not implementing.');
-    }
-	
-    /**
-     * @todo
-     *
-     * @return string
-     */
-    public function getIsBuiltin()
-	{
-       throw new \InvalidArgumentException('not implementing.');
-    }
-	
-    /**
-     * @todo
-	 *
-     * @return boolean
-     */
-    public function getIsActive()
-	{
-        throw new \InvalidArgumentException('not implementing.');
-    }
 
-    /**
-     * @todo
-     *
-     * @return boolean
-     */
-    public function getIsVerified()
-	{
-        throw new \InvalidArgumentException('not implementing.');
-    }
-	
-    /**
-     * @todo
-     *
-     * @return string
-     */
-    public function getTimeZone()
-	{
-        throw new \InvalidArgumentException('not implementing.');
-    }
-	
     /**
      * Create a new user
      *

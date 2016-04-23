@@ -15,20 +15,15 @@ class Role extends Model
 {
 	//use SoftDeletes;
 
-    use RoleTrait;
+    //use RoleTrait;
 	
     /**
      * The database table used by the model.
      *
      * @var string
      */
-    protected $table;
-	
-	/**
-	 * Primary Key
-	 *
-	 * @var string
-	 */
+    protected $table = 'odk_role';
+
 	protected $primaryKey = 'id_role';
 
 	/**
@@ -64,14 +59,5 @@ class Role extends Model
     public function __construct(array $attributes = array())
     {
         parent::__construct($attributes);
-        $prefix = \Config::get('stoplite.prefix');
-        $stable = \Config::get('stoplite.tables');
-		$this->table = $prefix.$stable['role'];
     }
-
-	public function createRole($roleName)
-	{
-		throw new \InvalidArgumentException('create role not implementing.');
-	}
-	
 }

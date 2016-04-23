@@ -92,7 +92,7 @@ class StopliteSeeder extends Seeder
 			'updated_at' 			=> date('Y-m-d H:i:s')
 		]);
 		
-		$type_combobox = DB::table($prefix . $tablename['field_types'])->insertGetId([
+		DB::table($prefix . $tablename['field_types'])->insertGetId([
 			'field_name'			=> 'ComboBox',
 			'code_field_types'		=> 'combobox',
 			'field_description' 	=> 'ComboBox',
@@ -292,242 +292,111 @@ class StopliteSeeder extends Seeder
 		//-- START PERMISSION --//
 		
 		$can_create_user = DB::table($prefix . $tablename['permissions'])->insert([
-			'perm_name' 		=> 'Create User',
-			'code_perm' 		=> 'create-user',
-			'perm_description' 	=> 'Anyone who can create users',
-			'is_active' 		=> 1,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s'),			
-		]);
-		
-		$can_edit_user = DB::table($prefix . $tablename['permissions'])->insert([
-			'perm_name' 		=> 'Edit User',
-			'code_perm' 		=> 'edit-user',
-			'perm_description' 	=> 'Anyone who can edit users',
-			'is_active' 		=> 1,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s'),			
-		]);
-		
-		$can_remove_user = DB::table($prefix . $tablename['permissions'])->insert([
-			'perm_name' 		=> 'Delete User',
-			'code_perm' 		=> 'delete-user',
-			'perm_description' 	=> 'Anyone who can delete users',
-			'is_active' 		=> 1,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s'),			
+			'perm_name' => 'Create User',
+			'code_perm' => 'create-user',
+			'perm_description' => 'Anyone who can create users',
+			'is_active' 	=> 1,
+			'created_at' 	=> date('Y-m-d H:i:s'),
+			'updated_at' 	=> date('Y-m-d H:i:s'),			
 		]);
 		
 		//-- END PERMISSION --//
 		
 		//-- START ATTACH USER ROLE --/
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' 		=> $user_admin,
-			'roles_id' 		=> $role_admin,
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s')
+			'user_id' => $user_admin,
+			'roles_id' => $role_admin,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' 		=> $user_member,
-			'roles_id' 		=> $role_member,
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s')
+			'user_id' => $user_member,
+			'roles_id' => $role_member,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' 		=> $user_free,
-			'roles_id' 		=> $role_freetrial,
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s')
+			'user_id' => $user_free,
+			'roles_id' => $role_freetrial,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' 		=> $user_bronze,
-			'roles_id' 		=> $role_bronze,
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s')
+			'user_id' => $user_bronze,
+			'roles_id' => $role_bronze,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id'		=> $user_silver,
-			'roles_id'		=> $role_silver,
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s')
+			'user_id' => $user_silver,
+			'roles_id' => $role_silver,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
 		
 		DB::table($prefix . $tablename['userrole'])->insert([
-			'user_id' 		=> $user_gold,
-			'roles_id' 		=> $role_gold,
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s')
+			'user_id' => $user_gold,
+			'roles_id' => $role_gold,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
 
 		//-- END ATTACH USER ROLE --/
 		
 		DB::table($prefix . $tablename['permission_roles'])->insert([
-			'permission_id' 	=> $can_create_user,
-			'roles_id' 			=> $role_admin,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s')
-		]);
-		
-		DB::table($prefix . $tablename['permission_roles'])->insert([
-			'permission_id' 	=> $can_edit_user,
-			'roles_id' 			=> $role_admin,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s')
-		]);
-		
-		DB::table($prefix . $tablename['permission_roles'])->insert([
-			'permission_id' 	=> $can_remove_user,
-			'roles_id' 			=> $role_admin,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s')
+			'permission_id' => $can_create_user,
+			'roles_id' => $role_admin,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s')
 		]);
 		
 		//-- START CUSTOM FIELDS --//
-		$user_fields_passport = DB::table($prefix . $tablename['user_fields'])->insertGetId([
-			'field_type_id' 	=> $type_string,
-			'group_field_id' 	=> $usergroup_personal,
-			'field_name' 		=> 'Passport number',
-			'field_comment' 	=> null,
-			'possible_values' 	=> null,
+		DB::table($prefix . $tablename['user_fields'])->insert([
+			'field_type_id' => $type_string,
+			'group_field_id' => $usergroup_personal,
+			'field_name' => 'Passport number',
+			'field_comment' => null,
+			'possible_values' => null,
 			'text_select_value' => null,
-			'must_unique' 		=> 1,
-			'is_mandatory' 		=> 1,
-			'field_order' 		=> 1,
-			'sort_values' 		=> 1,
-			'is_active' 		=> 1,
-			'show_in_signup' 	=> 1,
-			'admin_use_only' 	=> 0,
-			'vertical_layout' 	=> 0,
-			'is_encrypted' 		=> 0,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s'),
-			'deleted_at' 		=> null
-		]);
-
-		$user_fields_gender = DB::table($prefix . $tablename['user_fields'])->insertGetId([
-			'field_type_id' 	=> $type_combobox,
-			'group_field_id' 	=> $usergroup_personal,
-			'field_name' 		=> 'Gender',
-			'field_comment'		=> 'Please select your gender',
-			'possible_values' 	=> 'Male; Female',
-			'text_select_value' => 'Please select your gender',
-			'must_unique' 		=> 0,
-			'is_mandatory' 		=> 0,
-			'field_order' 		=> 1,
-			'sort_values' 		=> 1,
-			'is_active' 		=> 1,
-			'show_in_signup' 	=> 1,
-			'admin_use_only' 	=> 0,
-			'vertical_layout' 	=> 0,
-			'is_encrypted' 		=> 0,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s'),
-			'deleted_at' 		=> null
+			'is_mandatory' => 1,
+			'field_order' => 1,
+			'sort_values' => 1,
+			'is_active' => 1,
+			'show_in_signup' => 1,
+			'admin_use_only' => 0,
+			'vertical_layout' => 0,
+			'is_encrypted' => 0,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s'),
+			'deleted_at' => null
+			
 		]);
 		
-		$user_fields_biodata = DB::table($prefix . $tablename['user_fields'])->insertGetId([
-			'field_type_id' 	=> $type_text,
-			'group_field_id' 	=> $usergroup_personal,
-			'field_name' 		=> 'Bio Data',
-			'field_comment'		=> null,
-			'possible_values' 	=> null,
+		DB::table($prefix . $tablename['user_fields'])->insert([
+			'field_type_id' => $type_text,
+			'group_field_id' => $usergroup_personal,
+			'field_name' => 'Bio Data',
+			'field_comment' => null,
+			'possible_values' => null,
 			'text_select_value' => null,
-			'must_unique' 		=> 0,
-			'is_mandatory' 		=> 0,
-			'field_order' 		=> 1,
-			'sort_values' 		=> 1,
-			'is_active' 		=> 1,
-			'show_in_signup' 	=> 0,
-			'admin_use_only' 	=> 0,
-			'vertical_layout' 	=> 0,
-			'is_encrypted' 		=> 0,
-			'created_at' 		=> date('Y-m-d H:i:s'),
-			'updated_at' 		=> date('Y-m-d H:i:s'),
-			'deleted_at' 		=> null
+			'is_mandatory' => 0,
+			'field_order' => 1,
+			'sort_values' => 1,
+			'is_active' => 1,
+			'show_in_signup' => 0,
+			'admin_use_only' => 0,
+			'vertical_layout' => 0,
+			'is_encrypted' => 0,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s'),
+			'deleted_at' => null
 		]);
 		
 		//-- END CUSTOM FIELDS --//
-		
-		
-		//-- START CUSTOM FIELDS VALUE --//
-		
-		DB::table($prefix . $tablename['user_profile_fields'])->insert([
-			'user_id' 		=> $user_admin,
-			'userfield_id' 	=> $user_fields_passport,
-			'field_value' 	=> 'BD0201201',
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),
-			'deleted_at' 	=> null
-		]);
-		
-		DB::table($prefix . $tablename['user_profile_fields'])->insert([
-			'user_id' 		=> $user_admin,
-			'userfield_id' 	=> $user_fields_gender,
-			'field_value' 	=> 'male',
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),
-			'deleted_at' 	=> null
-		]);
-		
-		DB::table($prefix . $tablename['user_profile_fields'])->insert([
-			'user_id' 		=> $user_admin,
-			'userfield_id' 	=> $user_fields_biodata,
-			'field_value' 	=> 'The show must go on!',
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),
-			'deleted_at' 	=> null
-		]);
-		
-		DB::table($prefix . $tablename['user_profile_fields'])->insert([
-			'user_id' 		=> $user_member,
-			'userfield_id' 	=> $user_fields_passport,
-			'field_value' 	=> 'BD0201202',
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),
-			'deleted_at' 	=> null
-		]);
-		
-		DB::table($prefix . $tablename['user_profile_fields'])->insert([
-			'user_id' 		=> $user_free,
-			'userfield_id' 	=> $user_fields_passport,
-			'field_value' 	=> 'BD0201203',
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),
-			'deleted_at' 	=> null
-		]);
-		
-		DB::table($prefix . $tablename['user_profile_fields'])->insert([
-			'user_id' 		=> $user_bronze,
-			'userfield_id' 	=> $user_fields_passport,
-			'field_value' 	=> 'BD0201204',
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),
-			'deleted_at' 	=> null
-		]);
-		
-		DB::table($prefix . $tablename['user_profile_fields'])->insert([
-			'user_id' 		=> $user_silver,
-			'userfield_id' 	=> $user_fields_passport,
-			'field_value' 	=> 'BD0201205',
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),
-			'deleted_at' 	=> null
-		]);
-		
-		DB::table($prefix . $tablename['user_profile_fields'])->insert([
-			'user_id' 		=> $user_gold,
-			'userfield_id' 	=> $user_fields_passport,
-			'field_value' 	=> 'BD0201206',
-			'created_at' 	=> date('Y-m-d H:i:s'),
-			'updated_at' 	=> date('Y-m-d H:i:s'),
-			'deleted_at' 	=> null
-		]);
-		
-		//-- END CUSTOM FIELDS VALUE --//
 		
 		$this->command->info('StopLite tables are seeded!');
 	}

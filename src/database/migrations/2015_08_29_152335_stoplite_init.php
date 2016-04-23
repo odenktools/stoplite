@@ -23,18 +23,7 @@ class StopliteInit extends Migration
 	public function up()
 	{
 		$prefix = $this->prefix;
-		
-		Schema::create($prefix . 'strip_payment', function($table)
-		{
-			$table->tinyInteger('stripe_active')->default(0);
-			$table->string('stripe_id')->nullable();
-			$table->string('stripe_subscription')->nullable();
-			$table->string('stripe_plan', 100)->nullable();
-			$table->string('last_four', 4)->nullable();
-			$table->timestamp('trial_ends_at')->nullable();
-			$table->timestamp('subscription_ends_at')->nullable();
-		});
-		
+
 		Schema::create($prefix . 'role', function($table)
 		{
 			$table->engine = 'InnoDB';
@@ -188,7 +177,6 @@ class StopliteInit extends Migration
 			$table->text('field_comment', 50)->nullable();
 			$table->string('possible_values', 50)->nullable();
 			$table->string('text_select_value', 50)->nullable();
-			$table->tinyInteger('must_unique')->default(0);
 			$table->tinyInteger('is_mandatory')->default(0);
 			$table->tinyInteger('field_order')->default(0);
 			$table->tinyInteger('sort_values')->default(0);
@@ -216,9 +204,7 @@ class StopliteInit extends Migration
 
 			$table->foreign('user_id')->references('id_user')->on($prefix . 'users');
 			$table->foreign('userfield_id')->references('id_user_field')->on($prefix . 'user_fields');
-			$table->timestamps();
-			$table->softDeletes();
-			
+
 		});
 		
 		Schema::create($prefix . 'permission_roles', function($table) use ($prefix)
