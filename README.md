@@ -4,7 +4,7 @@ Laravel 5.1 Auth
 
 #How To Install
 
-To install titanwall, add the following lines in your composer.json file:
+To install stoplite, add the following lines in your composer.json file:
 
 	"require-dev": {
 		"odenktools/stoplite": "dev-master"
